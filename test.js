@@ -3,6 +3,7 @@ const { json } = express;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const http = require("http");
+require('@tensorflow/tfjs-node');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const app = express();
@@ -63,7 +64,15 @@ app.post("/check", async function (req, res) {
     if (engagementTime <= 0 || eventCount <= 0 || viewRate <= 0) {
         res.json({ status: 500, message: "Invalid request format, Please enter valid values" })
     } else {
-        const model = createModel();
+        const model = await tf.loadLayersModel('file://path/to/my-model/model.json');
+        console.log(model, "IF EXISTS")
+        if (!model) {
+            const elseModel = createModel();
+            await elseModel.save('file://path/to/my-model/model.json');
+            model = elseModel
+        console.log(model, "DO NOT EXISTS")
+
+        }
 
         model.fit(data, labels, { epochs: 100 }).then(() => {
             // Use the model to make predictions
