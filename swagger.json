@@ -1,0 +1,71 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Conversion Prediction API",
+        "description": "Converstion Analysis Project Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/check": {
+            "post": {
+                "tags": [
+                    "Check"
+                ],
+                "summary": "Get a possibility prediction",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Check"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "Attributes we will use to predict possibility",
+                        "schema": {
+                            "$ref": "#/definitions/Check"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Check": {
+            "required": [
+                "engagementTime",
+                "eventCount",
+                "viewRate"
+            ],
+            "properties": {
+                "engagementTime": {
+                    "type": "integer"
+                },
+                "eventCount": {
+                    "type": "integer"
+                },
+                "viewRate": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ]
+}
